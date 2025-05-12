@@ -8,6 +8,7 @@ enum BalanceHistoryOperationType {
   Withdrawal = 2;
   BalanceCorrection = 3;
   Transfer = 4;
+  Commision = 5;
 }
 
 enum OrderStatus {
@@ -23,14 +24,6 @@ enum OrderType {
   Limit = 2;
 }
 
-enum BalanceHistoryOperationType  {
-  Trading = 1;
-  BalanceCorrection = 2;
-  Withdrawal = 3;
-  Deposit = 4;
-  WithdrawalCancel = 5;
-  Commission = 6;
-}
 
 message GetHistoryPositionsRequest {
   string TraderId = 1;
@@ -147,7 +140,7 @@ message BalanceHistoryModel {
   string trader_id = 1;
   string account_id = 2;
   string id = 3;
-  OperationHistoryOperationType operation_type = 4;
+  BalanceHistoryOperationType operation_type = 4;
   optional string process_id = 5;
   double delta = 6;
   int64 date = 7;
