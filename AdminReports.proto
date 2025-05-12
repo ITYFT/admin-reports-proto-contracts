@@ -32,7 +32,6 @@ enum ClosePositionReason {
   AdminAction = 4;
 }
 
-
 message GetHistoryPositionsRequest {
   string TraderId = 1;
   string AccountId = 2;
@@ -72,35 +71,42 @@ message GetOrdersRequest {
 }
 
 message TradingEngineClosedPositionModel {
-  string id = 1;
-  string trader_id = 2;
-  string account_id = 3;
-  string asset_pair = 4;
-  string collateral = 5;
-  double lots_amount = 6;
-  bool is_buy = 7;
-  bool is_abook = 8;
-  optional double sl_price = 9;
-  optional double tp_price = 10;
+  string Id = 1;
+  string TraderId = 2;
+  string AccountId = 3;
+  string AssetPair = 4;
+  string Collateral = 5;
+  double LotsAmount = 6;
+  bool IsBuy = 7;
+  bool IsAbook = 8;
+  optional double SlPrice = 9;
+  optional double TpPrice = 10;
 
-  map<string, string> metadata = 11;
-  optional string order_id = 12;
+  map<string, string> Metadata = 11;
+  optional string OrderId = 12;
 
-  TradingEngineBidAskModel margin_bidask = 13;
-  TradingEngineBidAskModel open_bidask = 14;
-  TradingEngineBidAskModel profit_bidask = 15;
-  TradingEngineBidAskModel close_bidask = 16;
+  TradingEngineBidAskModel MarginBidask = 13;
+  TradingEngineBidAskModel OpenBidask = 14;
+  TradingEngineBidAskModel ProfitBidask = 15;
+  TradingEngineBidAskModel CloseBidask = 16;
 
-  ClosePositionReason close_reason = 17;
-  double commission = 18;
-  double pl = 19;
+  ClosePositionReason CloseReason = 17;
+  double Commission = 18;
+  double Pl = 19;
 
-  repeated TradingEnginePositionSwap swaps = 20;
+  repeated TradingEnginePositionSwap Swaps = 20;
 
-  int64 create_date = 21;
-  int64 close_date = 22;
-  string create_process_id = 23;
-  string close_process_id = 24;
+  int64 CreateDate = 21;
+  int64 CloseDate = 22;
+  string CreateProcessId = 23;
+  string CloseProcessId = 24;
+
+  double Volume = 25;
+  double ContractSize = 26;
+  double NetProfit = 27;
+  double NetPl = 29;
+  double PositionLeverage = 30;
+  double SwapsSum = 31;
 }
 
 message TradingEngineOrderPersistenceGrpcModel {
@@ -130,7 +136,6 @@ message TradingEngineOrderPersistenceGrpcModel {
   optional double DesiredPrice = 18;
 }
 
-
 message TradingEngineBidAskModel {
   string AssetPair = 1;
   double Bid = 2;
@@ -143,48 +148,54 @@ message TradingEnginePositionSwap {
   int64 Date = 2;
 }
 
-
 message BalanceHistoryModel {
-  string trader_id = 1;
-  string account_id = 2;
-  string id = 3;
-  BalanceHistoryOperationType operation_type = 4;
-  optional string process_id = 5;
-  double delta = 6;
-  int64 date = 7;
-  optional string comment = 8;
-  optional string reference_operation_id = 9;
-  double balance_after_operation = 10;
+  string TraderId = 1;
+  string AccountId = 2;
+  string Id = 3;
+  BalanceHistoryOperationType OperationType = 4;
+  optional string ProcessId = 5;
+  double Delta = 6;
+  int64 Date = 7;
+  optional string Comment = 8;
+  optional string ReferenceOperationId = 9;
+  double BalanceAfterOperation = 10;
 }
 
 message TradingEngineActivePositionModel {
-  string id = 1;
-  string trader_id = 2;
-  string account_id = 3;
-  string asset_pair = 4;
-  string collateral = 5;
-  double lots_amount = 6;
-  bool is_buy = 7;
-  bool is_abook = 8;
-  optional double sl_price = 9;
-  optional double tp_price = 10;
+  string Id = 1;
+  string TraderId = 2;
+  string AccountId = 3;
+  string AssetPair = 4;
+  string Collateral = 5;
+  double LotsAmount = 6;
+  bool IsBuy = 7;
+  bool IsAbook = 8;
+  optional double SlPrice = 9;
+  optional double TpPrice = 10;
 
-  map<string, string> metadata = 11;
-  optional string order_id = 12;
+  map<string, string> Metadata = 11;
+  optional string OrderId = 12;
 
-  TradingEngineBidAskModel margin_bidask = 13;
-  TradingEngineBidAskModel open_bidask = 14;
-  TradingEngineBidAskModel profit_bidask = 15;
-  TradingEngineBidAskModel active_bidask = 16;
+  TradingEngineBidAskModel MarginBidask = 13;
+  TradingEngineBidAskModel OpenBidask = 14;
+  TradingEngineBidAskModel ProfitBidask = 15;
+  TradingEngineBidAskModel ActiveBidask = 16;
 
-  double commission = 17;
-  double pl = 18;
-  repeated TradingEnginePositionSwap swaps = 19;
+  double Commission = 17;
+  double Pl = 18;
+  repeated TradingEnginePositionSwap Swaps = 19;
 
-  int64 create_date = 20;
-  int64 update_date = 21;
-  string create_process_id = 22;
-  string update_process_id = 23;
+  int64 CreateDate = 20;
+  int64 UpdateDate = 21;
+  string CreateProcessId = 22;
+  string UpdateProcessId = 23;
+
+  double Volume = 25;
+  double ContractSize = 26;
+  double NetProfit = 27;
+  double NetPl = 29;
+  double PositionLeverage = 30;
+  double SwapsSum = 31;
 }
 
 service AdminReportsService {
