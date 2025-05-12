@@ -101,12 +101,12 @@ message TradingEngineClosedPositionModel {
   string CreateProcessId = 23;
   string CloseProcessId = 24;
 
-  double Volume = 25;
-  double ContractSize = 26;
-  double NetProfit = 27;
-  double NetPl = 29;
-  double PositionLeverage = 30;
-  double SwapsSum = 31;
+  optional double Volume = 25;
+  optional double ContractSize = 26;
+  optional double NetProfit = 27;
+  optional double NetPl = 29;
+  optional double PositionLeverage = 30;
+  optional double SwapsSum = 31;
 }
 
 message TradingEngineOrderPersistenceGrpcModel {
@@ -190,12 +190,12 @@ message TradingEngineActivePositionModel {
   string CreateProcessId = 22;
   string UpdateProcessId = 23;
 
-  double Volume = 25;
-  double ContractSize = 26;
-  double NetProfit = 27;
-  double NetPl = 29;
-  double PositionLeverage = 30;
-  double SwapsSum = 31;
+  optional double Volume = 25;
+  optional double ContractSize = 26;
+  optional double NetProfit = 27;
+  optional double NetPl = 29;
+  optional double PositionLeverage = 30;
+  optional double SwapsSum = 31;
 }
 
 service AdminReportsService {
