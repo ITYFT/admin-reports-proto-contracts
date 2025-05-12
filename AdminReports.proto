@@ -188,8 +188,8 @@ message TradingEngineActivePositionModel {
 }
 
 service AdminReportsService {
-  rpc GetAllHistoryPositionsAsync(GetHistoryPositionsRequest) returns (stream TradingEngineClosedPositionModel);
-  rpc GetActivePositionsAsync(GetActivePositionsRequest) returns (stream TradingEngineActivePositionModel);
+  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns (stream TradingEngineClosedPositionModel);
+  rpc GetActivePositions(GetActivePositionsRequest) returns (stream TradingEngineActivePositionModel);
   rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (stream BalanceHistoryModel);
   rpc GetOrders(GetOrdersRequest) returns (stream TradingEngineOrderPersistenceGrpcModel);
 }
