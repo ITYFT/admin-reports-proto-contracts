@@ -1,0 +1,194 @@
+syntax = "proto3";
+
+package admin_reports;
+
+enum BalanceHistoryOperationType {
+  Trading = 0;
+  Deposit = 1;
+  Withdrawal = 2;
+  BalanceCorrection = 3;
+  Transfer = 4;
+}
+
+enum OrderStatus {
+  Active = 0;
+  Failed = 1;
+  Canceled = 2;
+  Executed = 3;
+}
+
+enum OrderType {
+  Market = 0;
+  Stop = 1;
+  Limit = 2;
+}
+
+message GetHistoryPositionsRequest {
+  string TraderId = 1;
+  string AccountId = 2;
+  uint64 DateFrom = 3;
+  uint64 DateTo = 4;
+  uint64 Page = 5;
+  uint64 PageSize = 6;
+}
+
+message GetActivePositionsRequest {
+  string TraderId = 1;
+  string AccountId = 2;
+  uint64 DateFrom = 3;
+  uint64 DateTo = 4;
+  uint64 Page = 5;
+  uint64 PageSize = 6;
+}
+
+message GetBalanceHistoryRequest {
+  string TraderId = 1;
+  string AccountId = 2;
+  uint64 DateFrom = 3;
+  uint64 DateTo = 4;
+  repeated BalanceHistoryOperationType OperationTypes = 5;
+  uint64 Page = 6;
+  uint64 PageSize = 7;
+}
+
+message GetOrdersRequest {
+  string TraderId = 1;
+  string AccountId = 2;
+  uint64 DateFrom = 3;
+  uint64 DateTo = 4;
+  repeated OrderStatus OrderStatus = 5;
+  uint64 Page = 6;
+  uint64 PageSize = 7;
+}
+
+message TradingEngineClosedPositionModel {
+    string id = 1;
+    string trader_id = 2;
+    string account_id = 3;
+    string asset_pair = 4;
+    string collateral = 5;
+    double lots_amount = 6;
+    bool is_buy = 7;
+    bool is_abook = 8;
+    optional double sl_price = 9;
+    optional double tp_price = 10;
+
+    map<string, string> metadata = 11;
+    optional string order_id = 12;
+
+    TradingEngineBidAskModel margin_bidask = 13;
+    TradingEngineBidAskModel open_bidask = 14;
+    TradingEngineBidAskModel profit_bidask = 15;
+    TradingEngineBidAskModel close_bidask = 16;
+
+    ClosePositionReason close_reason = 17;
+    double commission = 18;
+    double pl = 19;
+
+    repeated TradingEnginePositionSwap swaps = 20;
+
+    int64 create_date = 21;
+    int64 close_date = 22;
+    string create_process_id = 23;
+    string close_process_id = 24;
+}
+
+message TradingEngineOrderPersistenceGrpcModel {
+  string Id = 1;
+  string TraderId = 2;
+  string AccountId = 3;
+  string AssetPair = 4;
+  string Collateral = 5;
+  double LotsAmount = 6;
+  bool IsBuy = 7;
+  bool IsAbook = 8;
+
+  optional double SlPrice = 9;
+  optional double TpPrice = 10;
+
+  map<string, string> Metadata = 11;
+
+  OrderType OrderType = 12;
+  OrderStatus PositionStatus = 13;
+
+  int64 CreateDate = 14;
+  int64 UpdateDate = 15;
+
+  string CreateProcessId = 16;
+  string UpdateProcessId = 17;
+
+  optional double DesiredPrice = 18;
+}
+
+
+message TradingEngineBidAskModel {
+  string AssetPair = 1;
+  double Bid = 2;
+  double Ask = 3;
+  int64 Date = 4;
+}
+
+
+message TradingEnginePositionSwap {
+  double Amount = 1;
+  int64 Date = 2;
+}
+
+enum BalanceHistoryOperationType  {
+  Trading = 1;
+  BalanceCorrection = 2;
+  Withdrawal = 3;
+  Deposit = 4;
+  WithdrawalCancel = 5;
+  Commission = 6;
+}
+
+message BalanceHistoryModel {
+  string trader_id = 1;
+  string account_id = 2;
+  string id = 3;
+  OperationHistoryOperationType operation_type = 4;
+  optional string process_id = 5;
+  double delta = 6;
+  int64 date = 7;
+  optional string comment = 8;
+  optional string reference_operation_id = 9;
+  double balance_after_operation = 10;
+}
+
+message TradingEngineActivePositionModel {
+  string id = 1;
+  string trader_id = 2;
+  string account_id = 3;
+  string asset_pair = 4;
+  string collateral = 5;
+  double lots_amount = 6;
+  bool is_buy = 7;
+  bool is_abook = 8;
+  optional double sl_price = 9;
+  optional double tp_price = 10;
+
+  map<string, string> metadata = 11;
+  optional string order_id = 12;
+
+  TradingEngineBidAskModel margin_bidask = 13;
+  TradingEngineBidAskModel open_bidask = 14;
+  TradingEngineBidAskModel profit_bidask = 15;
+  TradingEngineBidAskModel active_bidask = 16;
+
+  double commission = 17;
+  double pl = 18;
+  repeated TradingEnginePositionSwap swaps = 19;
+
+  int64 create_date = 20;
+  int64 update_date = 21;
+  string create_process_id = 22;
+  string update_process_id = 23;
+}
+
+service TradingEngineService {
+  rpc GetAllHistoryPositionsAsync(GetHistoryPositionsRequest) returns (stream TradingEngineClosedPositionModel);
+  rpc GetActivePositionsAsync(GetActivePositionsRequest) returns (stream TradingEngineActivePositionModel);
+  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (stream BalanceHistoryModel);
+  rpc GetOrders(GetOrdersRequest) returns (stream TradingEngineOrderPersistenceGrpcModel);
+}
