@@ -24,6 +24,14 @@ enum OrderType {
   Limit = 2;
 }
 
+enum ClosePositionReason {
+  Manual = 0;
+  Tp = 1;
+  Sl = 2;
+  So = 3;
+  AdminAction = 4;
+}
+
 
 message GetHistoryPositionsRequest {
   string TraderId = 1;
