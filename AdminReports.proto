@@ -23,6 +23,15 @@ enum OrderType {
   Limit = 2;
 }
 
+enum BalanceHistoryOperationType  {
+  Trading = 1;
+  BalanceCorrection = 2;
+  Withdrawal = 3;
+  Deposit = 4;
+  WithdrawalCancel = 5;
+  Commission = 6;
+}
+
 message GetHistoryPositionsRequest {
   string TraderId = 1;
   string AccountId = 2;
@@ -62,35 +71,35 @@ message GetOrdersRequest {
 }
 
 message TradingEngineClosedPositionModel {
-    string id = 1;
-    string trader_id = 2;
-    string account_id = 3;
-    string asset_pair = 4;
-    string collateral = 5;
-    double lots_amount = 6;
-    bool is_buy = 7;
-    bool is_abook = 8;
-    optional double sl_price = 9;
-    optional double tp_price = 10;
+  string id = 1;
+  string trader_id = 2;
+  string account_id = 3;
+  string asset_pair = 4;
+  string collateral = 5;
+  double lots_amount = 6;
+  bool is_buy = 7;
+  bool is_abook = 8;
+  optional double sl_price = 9;
+  optional double tp_price = 10;
 
-    map<string, string> metadata = 11;
-    optional string order_id = 12;
+  map<string, string> metadata = 11;
+  optional string order_id = 12;
 
-    TradingEngineBidAskModel margin_bidask = 13;
-    TradingEngineBidAskModel open_bidask = 14;
-    TradingEngineBidAskModel profit_bidask = 15;
-    TradingEngineBidAskModel close_bidask = 16;
+  TradingEngineBidAskModel margin_bidask = 13;
+  TradingEngineBidAskModel open_bidask = 14;
+  TradingEngineBidAskModel profit_bidask = 15;
+  TradingEngineBidAskModel close_bidask = 16;
 
-    ClosePositionReason close_reason = 17;
-    double commission = 18;
-    double pl = 19;
+  ClosePositionReason close_reason = 17;
+  double commission = 18;
+  double pl = 19;
 
-    repeated TradingEnginePositionSwap swaps = 20;
+  repeated TradingEnginePositionSwap swaps = 20;
 
-    int64 create_date = 21;
-    int64 close_date = 22;
-    string create_process_id = 23;
-    string close_process_id = 24;
+  int64 create_date = 21;
+  int64 close_date = 22;
+  string create_process_id = 23;
+  string close_process_id = 24;
 }
 
 message TradingEngineOrderPersistenceGrpcModel {
@@ -128,20 +137,11 @@ message TradingEngineBidAskModel {
   int64 Date = 4;
 }
 
-
 message TradingEnginePositionSwap {
   double Amount = 1;
   int64 Date = 2;
 }
 
-enum BalanceHistoryOperationType  {
-  Trading = 1;
-  BalanceCorrection = 2;
-  Withdrawal = 3;
-  Deposit = 4;
-  WithdrawalCancel = 5;
-  Commission = 6;
-}
 
 message BalanceHistoryModel {
   string trader_id = 1;
