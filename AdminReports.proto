@@ -187,7 +187,7 @@ message TradingEngineActivePositionModel {
   string update_process_id = 23;
 }
 
-service TradingEngineService {
+service AdminReportsService {
   rpc GetAllHistoryPositionsAsync(GetHistoryPositionsRequest) returns (stream TradingEngineClosedPositionModel);
   rpc GetActivePositionsAsync(GetActivePositionsRequest) returns (stream TradingEngineActivePositionModel);
   rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (stream BalanceHistoryModel);
