@@ -94,7 +94,7 @@ message TradingEngineClosedPositionModel {
   double Commission = 18;
   double Pl = 19;
 
-  repeated TradingEnginePositionSwap Swaps = 20;
+  repeated TradingEnginePositionSwapModel Swaps = 20;
 
   int64 CreateDate = 21;
   int64 CloseDate = 22;
@@ -143,7 +143,7 @@ message TradingEngineBidAskModel {
   int64 Date = 4;
 }
 
-message TradingEnginePositionSwap {
+message TradingEnginePositionSwapModel {
   double Amount = 1;
   int64 Date = 2;
 }
@@ -183,7 +183,7 @@ message TradingEngineActivePositionModel {
 
   double Commission = 17;
   double Pl = 18;
-  repeated TradingEnginePositionSwap Swaps = 19;
+  repeated TradingEnginePositionSwapModel Swaps = 19;
 
   int64 CreateDate = 20;
   int64 UpdateDate = 21;
