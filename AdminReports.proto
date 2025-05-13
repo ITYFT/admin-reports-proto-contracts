@@ -33,8 +33,8 @@ enum ClosePositionReason {
 }
 
 message GetHistoryPositionsRequest {
-  string TraderId = 1;
-  string AccountId = 2;
+  optional string TraderId = 1;
+  optional string AccountId = 2;
   uint64 DateFrom = 3;
   uint64 DateTo = 4;
   uint64 Page = 5;
@@ -42,8 +42,8 @@ message GetHistoryPositionsRequest {
 }
 
 message GetActivePositionsRequest {
-  string TraderId = 1;
-  string AccountId = 2;
+  optional string TraderId = 1;
+  optional string AccountId = 2;
   uint64 DateFrom = 3;
   uint64 DateTo = 4;
   uint64 Page = 5;
@@ -51,8 +51,8 @@ message GetActivePositionsRequest {
 }
 
 message GetBalanceHistoryRequest {
-  string TraderId = 1;
-  string AccountId = 2;
+  optional string TraderId = 1;
+  optional string AccountId = 2;
   uint64 DateFrom = 3;
   uint64 DateTo = 4;
   repeated BalanceHistoryOperationType OperationTypes = 5;
@@ -61,8 +61,8 @@ message GetBalanceHistoryRequest {
 }
 
 message GetOrdersRequest {
-  string TraderId = 1;
-  string AccountId = 2;
+  optional string TraderId = 1;
+  optional string AccountId = 2;
   uint64 DateFrom = 3;
   uint64 DateTo = 4;
   repeated OrderStatus OrderStatus = 5;
