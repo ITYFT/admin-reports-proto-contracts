@@ -35,8 +35,8 @@ enum ClosePositionReason {
 message GetHistoryPositionsRequest {
   optional string TraderId = 1;
   optional string AccountId = 2;
-  uint64 DateFrom = 3;
-  uint64 DateTo = 4;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
   uint64 Page = 5;
   uint64 PageSize = 6;
 }
@@ -44,8 +44,8 @@ message GetHistoryPositionsRequest {
 message GetActivePositionsRequest {
   optional string TraderId = 1;
   optional string AccountId = 2;
-  uint64 DateFrom = 3;
-  uint64 DateTo = 4;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
   uint64 Page = 5;
   uint64 PageSize = 6;
 }
@@ -53,8 +53,8 @@ message GetActivePositionsRequest {
 message GetBalanceHistoryRequest {
   optional string TraderId = 1;
   optional string AccountId = 2;
-  uint64 DateFrom = 3;
-  uint64 DateTo = 4;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
   repeated BalanceHistoryOperationType OperationTypes = 5;
   uint64 Page = 6;
   uint64 PageSize = 7;
@@ -63,8 +63,8 @@ message GetBalanceHistoryRequest {
 message GetOrdersRequest {
   optional string TraderId = 1;
   optional string AccountId = 2;
-  uint64 DateFrom = 3;
-  uint64 DateTo = 4;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
   repeated OrderStatus OrderStatus = 5;
   uint64 Page = 6;
   uint64 PageSize = 7;
@@ -220,7 +220,40 @@ message PagedOrdersResponse {
 }
 
 
+message AccountModel {
+  string Id = 1;
+  string TraderId = 2;
+  string Currency = 3;
+  double Balance = 4;
+  double Leverage = 5;
+  string TradingGroup = 6;
+  int64 CreateDate = 7;
+  int64 LastUpdateDate = 8;
+  string LastUpdateProcessId = 9;
+  map<string, string> Metadata = 10;
+  int32 Status = 11;
+  int32 HedgeMode = 12;
+  double Equity = 13;
+  double FreeMargin = 14;
+  double Margin = 15;
+  bool TradingDisabled = 16;
+  double MarginLevel = 17;
+}
+
+message PagedAccountsResponse {
+  repeated AccountModel Items = 1;
+  int64 Total = 2;
+}
+
+message GetAccountsRequest {
+    string QueryString = 1;
+    uint64 Page = 2;
+    uint64 PageSize = 3;
+}
+
+
 service AdminReportsService {
+  rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse )
   rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns ( PagedClosedPositionsResponse);
   rpc GetActivePositions(GetActivePositionsRequest) returns ( PagedActivePositionsResponse);
   rpc GetBalanceHistory(GetBalanceHistoryRequest) returns ( PagedBalanceHistoryResponse);
