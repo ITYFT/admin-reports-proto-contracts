@@ -253,7 +253,7 @@ message GetAccountsRequest {
 
 
 service AdminReportsService {
-  rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse )
+  rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse );
   rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns ( PagedClosedPositionsResponse);
   rpc GetActivePositions(GetActivePositionsRequest) returns ( PagedActivePositionsResponse);
   rpc GetBalanceHistory(GetBalanceHistoryRequest) returns ( PagedBalanceHistoryResponse);
