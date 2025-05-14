@@ -221,8 +221,8 @@ message PagedOrdersResponse {
 
 
 service AdminReportsService {
-  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns (stream PagedClosedPositionsResponse);
-  rpc GetActivePositions(GetActivePositionsRequest) returns (stream PagedActivePositionsResponse);
-  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (stream PagedBalanceHistoryResponse);
-  rpc GetOrders(GetOrdersRequest) returns (stream PagedOrdersResponse);
+  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns ( PagedClosedPositionsResponse);
+  rpc GetActivePositions(GetActivePositionsRequest) returns ( PagedActivePositionsResponse);
+  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns ( PagedBalanceHistoryResponse);
+  rpc GetOrders(GetOrdersRequest) returns ( PagedOrdersResponse);
 }
