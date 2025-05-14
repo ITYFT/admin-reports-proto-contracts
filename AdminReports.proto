@@ -198,9 +198,31 @@ message TradingEngineActivePositionModel {
   optional double SwapsSum = 31;
 }
 
+
+message PagedActivePositionsResponse {
+  repeated TradingEngineActivePositionModel Items = 1;
+  int64 Total = 2;
+}
+
+message PagedClosedPositionsResponse {
+  repeated TradingEngineClosedPositionModel Items = 1;
+  int64 Total = 2;
+}
+
+message PagedBalanceHistoryResponse {
+  repeated BalanceHistoryModel Items = 1;
+  int64 Total = 2;
+}
+
+message PagedOrdersResponse {
+  repeated TradingEngineOrderPersistenceGrpcModel Items = 1;
+  int64 Total = 2;
+}
+
+
 service AdminReportsService {
-  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns (stream TradingEngineClosedPositionModel);
-  rpc GetActivePositions(GetActivePositionsRequest) returns (stream TradingEngineActivePositionModel);
-  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (stream BalanceHistoryModel);
-  rpc GetOrders(GetOrdersRequest) returns (stream TradingEngineOrderPersistenceGrpcModel);
+  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns (stream PagedClosedPositionsResponse);
+  rpc GetActivePositions(GetActivePositionsRequest) returns (stream PagedActivePositionsResponse);
+  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (stream PagedBalanceHistoryResponse);
+  rpc GetOrders(GetOrdersRequest) returns (stream PagedOrdersResponse);
 }
