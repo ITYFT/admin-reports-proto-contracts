@@ -258,4 +258,5 @@ service AdminReportsService {
   rpc GetActivePositions(GetActivePositionsRequest) returns ( PagedActivePositionsResponse);
   rpc GetBalanceHistory(GetBalanceHistoryRequest) returns ( PagedBalanceHistoryResponse);
   rpc GetOrders(GetOrdersRequest) returns ( PagedOrdersResponse);
+  rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
