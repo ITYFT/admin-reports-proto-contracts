@@ -201,9 +201,29 @@ message TradingEngineActivePositionModel {
   optional double SwapsSum = 31;
 }
 
+message TradingEngineTradeModel {
+  string Id = 1;
+  string TraderId = 2;
+  string AccountId = 3;
+  string AssetPair = 4;
+  optional string OrderId = 5;
+  optional string PositionId = 6;
+  double Price = 7;
+  double Pl = 8;
+  double Fee = 9;
+  double LotsAmount = 10;
+  int64 CreateDate = 11;
+  string CreateProcessId = 12;
+  bool IsBuy = 13;
+}
 
 message PagedActivePositionsResponse {
   repeated TradingEngineActivePositionModel Items = 1;
+  int64 Total = 2;
+}
+
+message PagedTradesResponse {
+  repeated TradingEngineTradeModel Items = 1;
   int64 Total = 2;
 }
 
@@ -248,12 +268,40 @@ message PagedAccountsResponse {
   int64 Total = 2;
 }
 
-message GetAccountsRequest {
+message   GetAccountsRequest {
     string QueryString = 1;
     uint64 Page = 2;
     uint64 PageSize = 3;
 }
 
+
+// ADMIN QL SECTION
+
+enum FieldType {
+  String = 0;
+  Int = 1;
+  Float = 2;
+  Bool = 3;
+}
+
+message FieldCondition {
+  string operator = 1;
+  string value = 2;
+  FieldType value_type = 3;
+}
+
+message FieldFilter {
+  string field = 1;
+  repeated FieldCondition conditions = 2;
+}
+
+message PaginatedFilterRequest {
+  repeated FieldFilter filters = 1;
+  optional uint64 date_from = 2;
+  optional uint64 date_to = 3;
+  uint64 page = 4;
+  uint64 page_size = 5;
+}
 
 service AdminReportsService {
   rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse );
@@ -262,4 +310,13 @@ service AdminReportsService {
   rpc GetBalanceHistory(GetBalanceHistoryRequest) returns ( PagedBalanceHistoryResponse);
   rpc GetOrders(GetOrdersRequest) returns ( PagedOrdersResponse);
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+
+  //ADMIN QL SECTION
+  rpc GetAllAccountsQl(PaginatedFilterRequest) returns (PagedAccountsResponse);
+  rpc GetOrdersQl(PaginatedFilterRequest) returns (PagedOrdersResponse);
+  rpc GetBalanceHistoryQl(PaginatedFilterRequest) returns (PagedBalanceHistoryResponse);
+  rpc GetClosedPositionsQl(PaginatedFilterRequest) returns (PagedClosedPositionsResponse);
+  rpc GetActivePositionsQl(PaginatedFilterRequest) returns (PagedActivePositionsResponse);
+  rpc GetTradesQl(PaginatedFilterRequest) returns (PagedActivePositionsResponse);
+
 }
