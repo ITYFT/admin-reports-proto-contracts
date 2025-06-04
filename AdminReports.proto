@@ -277,26 +277,26 @@ message   GetAccountsRequest {
 
 // ADMIN QL SECTION
 
-enum FieldType {
+enum TradingEngineFieldType {
   String = 0;
   Int = 1;
   Float = 2;
   Bool = 3;
 }
 
-message FieldCondition {
+message TradingEngineFieldCondition {
   string operator = 1;
   string value = 2;
-  FieldType value_type = 3;
+  TradingEngineFieldType value_type = 3;
 }
 
-message FieldFilter {
+message TradingEngineFieldFilter {
   string field = 1;
-  repeated FieldCondition conditions = 2;
+  repeated TradingEngineFieldCondition conditions = 2;
 }
 
-message PaginatedFilterRequest {
-  repeated FieldFilter filters = 1;
+message TradingEnginePaginatedFilterRequest {
+  repeated TradingEngineFieldFilter filters = 1;
   optional uint64 date_from = 2;
   optional uint64 date_to = 3;
   uint64 page = 4;
@@ -312,11 +312,11 @@ service AdminReportsService {
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 
   //ADMIN QL SECTION
-  rpc GetAllAccountsQl(PaginatedFilterRequest) returns (PagedAccountsResponse);
-  rpc GetOrdersQl(PaginatedFilterRequest) returns (PagedOrdersResponse);
-  rpc GetBalanceHistoryQl(PaginatedFilterRequest) returns (PagedBalanceHistoryResponse);
-  rpc GetClosedPositionsQl(PaginatedFilterRequest) returns (PagedClosedPositionsResponse);
-  rpc GetActivePositionsQl(PaginatedFilterRequest) returns (PagedActivePositionsResponse);
-  rpc GetTradesQl(PaginatedFilterRequest) returns (PagedActivePositionsResponse);
+  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (PagedAccountsResponse);
+  rpc GetOrdersQl(TradingEnginePaginatedFilterRequest) returns (PagedOrdersResponse);
+  rpc GetBalanceHistoryQl(TradingEnginePaginatedFilterRequest) returns (PagedBalanceHistoryResponse);
+  rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedClosedPositionsResponse);
+  rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedActivePositionsResponse);
+  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (PagedActivePositionsResponse);
 
 }
