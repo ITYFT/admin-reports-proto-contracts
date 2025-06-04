@@ -317,6 +317,6 @@ service AdminReportsService {
   rpc GetBalanceHistoryQl(TradingEnginePaginatedFilterRequest) returns (PagedBalanceHistoryResponse);
   rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedClosedPositionsResponse);
   rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedActivePositionsResponse);
-  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (PagedActivePositionsResponse);
+  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (PagedTradesResponse);
 
 }
