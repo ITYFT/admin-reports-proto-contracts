@@ -304,14 +304,14 @@ message TradingEnginePaginatedFilterRequest {
   TradingEngineSortField sort_by = 6;
 }
 
-enum SortDirection {
+enum TradingEngineSortDirection {
   Ascending = 0;
   Descending = 1;
 }
 
 message TradingEngineSortField {
   string field = 1;
-  SortDirection direction = 2;
+  TradingEngineSortDirection direction = 2;
 }
 
 
