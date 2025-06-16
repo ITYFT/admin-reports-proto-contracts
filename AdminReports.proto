@@ -301,7 +301,19 @@ message TradingEnginePaginatedFilterRequest {
   optional uint64 date_to = 3;
   uint64 page = 4;
   uint64 page_size = 5;
+  TradingEngineSortField sort_by = 6;
 }
+
+enum SortDirection {
+  Ascending = 0;
+  Descending = 1;
+}
+
+message TradingEngineSortField {
+  string field = 1;
+  SortDirection direction = 2;
+}
+
 
 service AdminReportsService {
   rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse );
