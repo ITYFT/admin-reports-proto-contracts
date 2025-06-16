@@ -301,7 +301,7 @@ message TradingEnginePaginatedFilterRequest {
   optional uint64 date_to = 3;
   uint64 page = 4;
   uint64 page_size = 5;
-  TradingEngineSortField sort_by = 6;
+  optional TradingEngineSortField sort_by = 6;
 }
 
 enum TradingEngineSortDirection {
