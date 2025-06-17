@@ -314,6 +314,92 @@ message TradingEngineSortField {
   TradingEngineSortDirection direction = 2;
 }
 
+enum AdminReportsErrorCode {
+  InvalidFilterField = 0;
+  InvalidSortField = 1;
+  InternalError = 2;
+}
+
+message AdminReportsError {
+  AdminReportsErrorCode code = 1;
+  string message = 2;
+}
+
+message PagedAccountsSuccess {
+  repeated AccountModel items = 1;
+  int64 total = 2;
+}
+
+message PagedAccountsResponseQl {
+  oneof result {
+    PagedAccountsSuccess success = 1;
+    repeated AdminReportsError errors = 2;
+  }
+}
+
+message PagedOrdersSuccess {
+  repeated TradingEngineOrderPersistenceGrpcModel items = 1;
+  int64 total = 2;
+}
+
+message PagedOrdersResponseQl {
+  oneof result {
+    PagedOrdersSuccess success = 1;
+    repeated AdminReportsError errors = 2;
+  }
+}
+
+message PagedBalanceHistorySuccess {
+  repeated BalanceHistoryModel items = 1;
+  int64 total = 2;
+}
+
+message PagedBalanceHistoryResponseQl {
+  oneof result {
+    PagedBalanceHistorySuccess success = 1;
+    repeated AdminReportsError errors = 2;
+  }
+}
+
+message PagedClosedPositionsSuccess {
+  repeated TradingEngineClosedPositionModel items = 1;
+  int64 total = 2;
+}
+
+message PagedClosedPositionsResponseQl {
+  oneof result {
+    PagedClosedPositionsSuccess success = 1;
+    repeated AdminReportsError errors = 2;
+  }
+}
+
+message PagedActivePositionsSuccess {
+  repeated TradingEngineActivePositionModel items = 1;
+  int64 total = 2;
+}
+
+message PagedActivePositionsResponseQl {
+  oneof result {
+    PagedActivePositionsSuccess success = 1;
+    repeated AdminReportsError errors = 2;
+  }
+}
+
+message PagedTradesSuccess {
+  repeated TradingEngineTradeModel items = 1;
+  int64 total = 2;
+}
+
+message PagedTradesResponseQl {
+  oneof result {
+    PagedTradesSuccess success = 1;
+    repeated AdminReportsError errors = 2;
+  }
+}
+
+
+
+
 
 service AdminReportsService {
   rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse );
@@ -324,11 +410,10 @@ service AdminReportsService {
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 
   //ADMIN QL SECTION
-  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (PagedAccountsResponse);
-  rpc GetOrdersQl(TradingEnginePaginatedFilterRequest) returns (PagedOrdersResponse);
-  rpc GetBalanceHistoryQl(TradingEnginePaginatedFilterRequest) returns (PagedBalanceHistoryResponse);
-  rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedClosedPositionsResponse);
-  rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedActivePositionsResponse);
-  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (PagedTradesResponse);
-
+  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (PagedAccountsResponseQl);
+  rpc GetOrdersQl(TradingEnginePaginatedFilterRequest) returns (PagedOrdersResponseQl);
+  rpc GetBalanceHistoryQl(TradingEnginePaginatedFilterRequest) returns (PagedBalanceHistoryResponseQl);
+  rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedClosedPositionsResponseQl);
+  rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (PagedActivePositionsResponseQl);
+  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (PagedTradesResponseQl);
 }
