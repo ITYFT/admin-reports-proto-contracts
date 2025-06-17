@@ -325,6 +325,7 @@ message AdminReportsError {
   string message = 2;
 }
 
+
 message PagedAccountsSuccess {
   repeated AccountModel items = 1;
   int64 total = 2;
@@ -333,7 +334,7 @@ message PagedAccountsSuccess {
 message PagedAccountsResponseQl {
   oneof result {
     PagedAccountsSuccess success = 1;
-    repeated AdminReportsError errors = 2;
+    AdminReportsError error = 2;
   }
 }
 
@@ -345,7 +346,7 @@ message PagedOrdersSuccess {
 message PagedOrdersResponseQl {
   oneof result {
     PagedOrdersSuccess success = 1;
-    repeated AdminReportsError errors = 2;
+    AdminReportsError error = 2;
   }
 }
 
@@ -357,7 +358,7 @@ message PagedBalanceHistorySuccess {
 message PagedBalanceHistoryResponseQl {
   oneof result {
     PagedBalanceHistorySuccess success = 1;
-    repeated AdminReportsError errors = 2;
+    AdminReportsError error = 2;
   }
 }
 
@@ -369,7 +370,7 @@ message PagedClosedPositionsSuccess {
 message PagedClosedPositionsResponseQl {
   oneof result {
     PagedClosedPositionsSuccess success = 1;
-    repeated AdminReportsError errors = 2;
+    AdminReportsError error = 2;
   }
 }
 
@@ -381,7 +382,7 @@ message PagedActivePositionsSuccess {
 message PagedActivePositionsResponseQl {
   oneof result {
     PagedActivePositionsSuccess success = 1;
-    repeated AdminReportsError errors = 2;
+    AdminReportsError error = 2;
   }
 }
 
@@ -393,12 +394,9 @@ message PagedTradesSuccess {
 message PagedTradesResponseQl {
   oneof result {
     PagedTradesSuccess success = 1;
-    repeated AdminReportsError errors = 2;
+    AdminReportsError error = 2;
   }
 }
-
-
-
 
 
 service AdminReportsService {
