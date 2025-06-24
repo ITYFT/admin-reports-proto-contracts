@@ -297,10 +297,10 @@ message TradingEngineFieldFilter {
 
 message TradingEnginePaginatedFilterRequest {
   repeated TradingEngineFieldFilter filters = 1;
-  optional uint64 date_from = 2;
-  optional uint64 date_to = 3;
-  uint64 page = 4;
-  uint64 page_size = 5;
+  optional int64 date_from = 2;
+  optional int64 date_to = 3;
+  int64 page = 4;
+  int64 page_size = 5;
   optional TradingEngineSortField sort_by = 6;
 }
 
