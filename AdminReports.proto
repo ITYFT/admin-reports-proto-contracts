@@ -408,10 +408,10 @@ service AdminReportsService {
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 
   //ADMIN QL SECTION
-  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (Pstream  agedAccountsResponseQl);
+  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedAccountsResponseQl);
   rpc GetOrdersQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedOrdersResponseQl);
   rpc GetBalanceHistoryQl(TradingEnginePaginatedFilterRequest) returns (stream PagedBalanceHistoryResponseQl);
   rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedClosedPositionsResponseQl);
   rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedActivePositionsResponseQl);
-  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedTradesResponseQl);
+  rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (stream PagedTradesResponseQl);
 }
