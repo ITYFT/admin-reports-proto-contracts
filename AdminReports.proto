@@ -12,6 +12,7 @@ enum BalanceHistoryOperationType {
   BalanceCorrection = 3;
   Transfer = 4;
   Commision = 5;
+  WithdrawalCancel = 6;
 }
 
 enum OrderStatus {
