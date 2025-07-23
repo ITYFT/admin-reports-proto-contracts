@@ -138,6 +138,7 @@ message TradingEngineOrderPersistenceGrpcModel {
   string UpdateProcessId = 17;
 
   optional double DesiredPrice = 18;
+  optional string PositionId = 19;
 }
 
 message TradingEngineBidAskModel {
