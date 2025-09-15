@@ -465,7 +465,8 @@ message DashboardPoint {
 }
 
 message DashboardResponse {
-  repeated DashboardPoint Points = 1;
+  int64 TotalCount = 1;
+  repeated DashboardPoint Points = 2;
 }
 
 // ----------------------------
