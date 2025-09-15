@@ -4,6 +4,9 @@ package admin_reports;
 
 import "google/protobuf/empty.proto";
 
+// ----------------------------
+// Core enums & models
+// ----------------------------
 
 enum BalanceHistoryOperationType {
   Trading = 0;
@@ -36,42 +39,16 @@ enum ClosePositionReason {
   AdminAction = 4;
 }
 
-message GetHistoryPositionsRequest {
-  optional string TraderId = 1;
-  optional string AccountId = 2;
-  optional uint64 DateFrom = 3;
-  optional uint64 DateTo = 4;
-  uint64 Page = 5;
-  uint64 PageSize = 6;
+message TradingEngineBidAskModel {
+  string AssetPair = 1;
+  double Bid = 2;
+  double Ask = 3;
+  int64 Date = 4;
 }
 
-message GetActivePositionsRequest {
-  optional string TraderId = 1;
-  optional string AccountId = 2;
-  optional uint64 DateFrom = 3;
-  optional uint64 DateTo = 4;
-  uint64 Page = 5;
-  uint64 PageSize = 6;
-}
-
-message GetBalanceHistoryRequest {
-  optional string TraderId = 1;
-  optional string AccountId = 2;
-  optional uint64 DateFrom = 3;
-  optional uint64 DateTo = 4;
-  repeated BalanceHistoryOperationType OperationTypes = 5;
-  uint64 Page = 6;
-  uint64 PageSize = 7;
-}
-
-message GetOrdersRequest {
-  optional string TraderId = 1;
-  optional string AccountId = 2;
-  optional uint64 DateFrom = 3;
-  optional uint64 DateTo = 4;
-  repeated OrderStatus OrderStatus = 5;
-  uint64 Page = 6;
-  uint64 PageSize = 7;
+message TradingEnginePositionSwapModel {
+  double Amount = 1;
+  int64 Date = 2;
 }
 
 message TradingEngineClosedPositionModel {
@@ -141,18 +118,6 @@ message TradingEngineOrderPersistenceGrpcModel {
   optional string PositionId = 19;
 }
 
-message TradingEngineBidAskModel {
-  string AssetPair = 1;
-  double Bid = 2;
-  double Ask = 3;
-  int64 Date = 4;
-}
-
-message TradingEnginePositionSwapModel {
-  double Amount = 1;
-  int64 Date = 2;
-}
-
 message BalanceHistoryModel {
   string TraderId = 1;
   string AccountId = 2;
@@ -219,6 +184,30 @@ message TradingEngineTradeModel {
   bool IsBuy = 13;
 }
 
+message AccountModel {
+  string Id = 1;
+  string TraderId = 2;
+  string Currency = 3;
+  double Balance = 4;
+  double Leverage = 5;
+  string TradingGroup = 6;
+  int64 CreateDate = 7;
+  int64 LastUpdateDate = 8;
+  string LastUpdateProcessId = 9;
+  map<string, string> Metadata = 10;
+  int32 Status = 11;
+  int32 HedgeMode = 12;
+  double Equity = 13;
+  double FreeMargin = 14;
+  double Margin = 15;
+  bool TradingDisabled = 16;
+  double MarginLevel = 17;
+}
+
+// ----------------------------
+// Pagination responses
+// ----------------------------
+
 message PagedActivePositionsResponse {
   repeated TradingEngineActivePositionModel Items = 1;
   int64 Total = 2;
@@ -244,40 +233,62 @@ message PagedOrdersResponse {
   int64 Total = 2;
 }
 
-
-message AccountModel {
-  string Id = 1;
-  string TraderId = 2;
-  string Currency = 3;
-  double Balance = 4;
-  double Leverage = 5;
-  string TradingGroup = 6;
-  int64 CreateDate = 7;
-  int64 LastUpdateDate = 8;
-  string LastUpdateProcessId = 9;
-  map<string, string> Metadata = 10;
-  int32 Status = 11;
-  int32 HedgeMode = 12;
-  double Equity = 13;
-  double FreeMargin = 14;
-  double Margin = 15;
-  bool TradingDisabled = 16;
-  double MarginLevel = 17;
-}
-
 message PagedAccountsResponse {
   repeated AccountModel Items = 1;
   int64 Total = 2;
 }
 
-message   GetAccountsRequest {
-    string QueryString = 1;
-    uint64 Page = 2;
-    uint64 PageSize = 3;
+// ----------------------------
+// Basic requests
+// ----------------------------
+
+message GetHistoryPositionsRequest {
+  optional string TraderId = 1;
+  optional string AccountId = 2;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
+  uint64 Page = 5;
+  uint64 PageSize = 6;
 }
 
+message GetActivePositionsRequest {
+  optional string TraderId = 1;
+  optional string AccountId = 2;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
+  uint64 Page = 5;
+  uint64 PageSize = 6;
+}
 
-// ADMIN QL SECTION
+message GetBalanceHistoryRequest {
+  optional string TraderId = 1;
+  optional string AccountId = 2;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
+  repeated BalanceHistoryOperationType OperationTypes = 5;
+  uint64 Page = 6;
+  uint64 PageSize = 7;
+}
+
+message GetOrdersRequest {
+  optional string TraderId = 1;
+  optional string AccountId = 2;
+  optional uint64 DateFrom = 3;
+  optional uint64 DateTo = 4;
+  repeated OrderStatus OrderStatus = 5;
+  uint64 Page = 6;
+  uint64 PageSize = 7;
+}
+
+message GetAccountsRequest {
+  string QueryString = 1;
+  uint64 Page = 2;
+  uint64 PageSize = 3;
+}
+
+// ----------------------------
+// ADMIN QL section
+// ----------------------------
 
 enum TradingEngineFieldType {
   String = 0;
@@ -297,15 +308,6 @@ message TradingEngineFieldFilter {
   repeated TradingEngineFieldCondition conditions = 2;
 }
 
-message TradingEnginePaginatedFilterRequest {
-  repeated TradingEngineFieldFilter filters = 1;
-  optional int64 date_from = 2;
-  optional int64 date_to = 3;
-  int64 page = 4;
-  int64 page_size = 5;
-  optional TradingEngineSortField sort_by = 6;
-}
-
 enum TradingEngineSortDirection {
   Ascending = 0;
   Descending = 1;
@@ -314,6 +316,15 @@ enum TradingEngineSortDirection {
 message TradingEngineSortField {
   string field = 1;
   TradingEngineSortDirection direction = 2;
+}
+
+message TradingEnginePaginatedFilterRequest {
+  repeated TradingEngineFieldFilter filters = 1;
+  optional int64 date_from = 2;
+  optional int64 date_to = 3;
+  int64 page = 4;
+  int64 page_size = 5;
+  optional TradingEngineSortField sort_by = 6;
 }
 
 enum AdminReportsErrorCode {
@@ -326,7 +337,6 @@ message AdminReportsError {
   AdminReportsErrorCode code = 1;
   string message = 2;
 }
-
 
 message PagedAccountsSuccess {
   repeated AccountModel items = 1;
@@ -400,20 +410,90 @@ message PagedTradesResponseQl {
   }
 }
 
+// ----------------------------
+// Dashboard section (requests & responses)
+// ----------------------------
+
+enum TimeFrame {
+  TIME_FRAME_UNSPECIFIED = 0;
+  MINUTE = 1;
+  HOUR = 2;
+  DAY = 3;
+  WEEK = 4;
+  MONTH = 5;
+}
+
+message AccountsDashboardRequest {
+  TimeFrame Frame = 1;
+  int64 From = 2;
+  int64 To = 3;
+}
+
+message GroupByOpenPositionDashboardRequest {
+  TimeFrame Frame = 1;
+  int64 From = 2;
+  int64 To = 3;
+}
+
+message GroupByClosePositionDashboardRequest {
+  TimeFrame Frame = 1;
+  int64 From = 2;
+  int64 To = 3;
+}
+
+message OrdersDashboardRequest {
+  TimeFrame Frame = 1;
+  int64 From = 2;
+  int64 To = 3;
+}
+
+message ClientsDashboardRequest {
+  TimeFrame Frame = 1;
+  int64 From = 2;
+  int64 To = 3;
+}
+
+message TradersDashboardRequest {
+  TimeFrame Frame = 1;
+  int64 From = 2;
+  int64 To = 3;
+}
+
+message DashboardPoint {
+  int64 Period = 1;
+  int64 Count = 2;
+}
+
+message DashboardResponse {
+  repeated DashboardPoint Points = 1;
+}
+
+// ----------------------------
+// Single service with ALL methods
+// ----------------------------
 
 service AdminReportsService {
-  rpc GetAllAccounts(GetAccountsRequest) returns ( PagedAccountsResponse );
-  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns ( PagedClosedPositionsResponse);
-  rpc GetActivePositions(GetActivePositionsRequest) returns ( PagedActivePositionsResponse);
-  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns ( PagedBalanceHistoryResponse);
-  rpc GetOrders(GetOrdersRequest) returns ( PagedOrdersResponse);
+  // Core report endpoints
+  rpc GetAllAccounts(GetAccountsRequest) returns (PagedAccountsResponse);
+  rpc GetAllHistoryPositions(GetHistoryPositionsRequest) returns (PagedClosedPositionsResponse);
+  rpc GetActivePositions(GetActivePositionsRequest) returns (PagedActivePositionsResponse);
+  rpc GetBalanceHistory(GetBalanceHistoryRequest) returns (PagedBalanceHistoryResponse);
+  rpc GetOrders(GetOrdersRequest) returns (PagedOrdersResponse);
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 
-  //ADMIN QL SECTION
-  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedAccountsResponseQl);
-  rpc GetOrdersQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedOrdersResponseQl);
+  // ADMIN QL streaming endpoints
+  rpc GetAllAccountsQl(TradingEnginePaginatedFilterRequest) returns (stream PagedAccountsResponseQl);
+  rpc GetOrdersQl(TradingEnginePaginatedFilterRequest) returns (stream PagedOrdersResponseQl);
   rpc GetBalanceHistoryQl(TradingEnginePaginatedFilterRequest) returns (stream PagedBalanceHistoryResponseQl);
-  rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedClosedPositionsResponseQl);
-  rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (stream  PagedActivePositionsResponseQl);
+  rpc GetClosedPositionsQl(TradingEnginePaginatedFilterRequest) returns (stream PagedClosedPositionsResponseQl);
+  rpc GetActivePositionsQl(TradingEnginePaginatedFilterRequest) returns (stream PagedActivePositionsResponseQl);
   rpc GetTradesQl(TradingEnginePaginatedFilterRequest) returns (stream PagedTradesResponseQl);
+
+  // Dashboard endpoints
+  rpc AccountsDashboard(AccountsDashboardRequest) returns (DashboardResponse);
+  rpc GroupByOpenPositionDashboard(GroupByOpenPositionDashboardRequest) returns (DashboardResponse);
+  rpc GroupByClosePositionDashboard(GroupByClosePositionDashboardRequest) returns (DashboardResponse);
+  rpc OrdersDashboard(OrdersDashboardRequest) returns (DashboardResponse);
+  rpc ClientsDashboard(ClientsDashboardRequest) returns (DashboardResponse);
+  rpc TradersDashboard(TradersDashboardRequest) returns (DashboardResponse);
 }
